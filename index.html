@@ -49,5 +49,28 @@
     </nav>
 
     <script src="script.js"></script>
+    <script>
+        // タブコンテンツ読み込み
+        async function loadTabContents() {
+            try {
+                const tabs = ['home', 'go', 'live', 'pack', 'me'];
+                for (const tab of tabs) {
+                    const response = await fetch(`tab-${tab}.html`);
+                    if (response.ok) {
+                        const html = await response.text();
+                        const el = document.getElementById(`tp-${tab}`);
+                        if (el) el.innerHTML = html;
+                    }
+                }
+            } catch (err) {
+                console.error('タブ読み込みエラー:', err);
+            }
+        }
+
+        // DOMContentLoaded時に読み込み
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTabContents();
+        });
+    </script>
 </body>
 </html>
